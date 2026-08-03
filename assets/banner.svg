@@ -1,0 +1,84 @@
+<svg viewBox="0 0 1280 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="injecy — sign apps and inject tweaks on-device">
+  <defs>
+    <radialGradient id="glowA" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#8f88ff" stop-opacity="0.55"/>
+      <stop offset="60%" stop-color="#8f88ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#6e66c8" stop-opacity="0.40"/>
+      <stop offset="60%" stop-color="#6e66c8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="word" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f2f2f6"/>
+      <stop offset="52%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#cfcbe8"/>
+    </linearGradient>
+    <linearGradient id="chip" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8f88ff"/>
+      <stop offset="100%" stop-color="#5c56b8"/>
+    </linearGradient>
+    <pattern id="grid" width="46" height="46" patternUnits="userSpaceOnUse">
+      <path d="M46 0H0V46" fill="none" stroke="#ffffff" stroke-opacity="0.045" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <mask id="gridmask"><rect width="1280" height="420" fill="url(#fade)"/></mask>
+  </defs>
+
+  <!-- backdrop -->
+  <rect width="1280" height="420" fill="#08080a"/>
+  <rect width="1280" height="420" fill="url(#grid)" mask="url(#gridmask)"/>
+  <ellipse cx="1020" cy="30" rx="520" ry="420" fill="url(#glowA)"/>
+  <ellipse cx="120" cy="430" rx="460" ry="360" fill="url(#glowB)"/>
+
+  <!-- eyebrow -->
+  <g font-family="ui-monospace, 'SF Mono', Menlo, monospace">
+    <rect x="92" y="118" width="26" height="1.5" fill="#b3adff" opacity="0.7"/>
+    <text x="132" y="124" fill="#8a8a95" font-size="19" letter-spacing="3">ON-DEVICE SIGNING</text>
+  </g>
+
+  <!-- wordmark -->
+  <text x="88" y="268" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
+        font-size="168" font-weight="600" letter-spacing="-8" fill="url(#word)">injecy</text>
+
+  <!-- tagline -->
+  <text x="94" y="332" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
+        font-size="30" fill="#8a8a95" letter-spacing="-0.3">Sign apps and inject tweaks right on your iPhone — no jailbreak.</text>
+
+  <!-- meta row -->
+  <g font-family="ui-monospace, 'SF Mono', Menlo, monospace" font-size="17" fill="#4a4a54">
+    <circle cx="98" cy="372" r="3" fill="#b3adff"/>
+    <text x="112" y="378">no computer</text>
+    <circle cx="258" cy="372" r="3" fill="#b3adff"/>
+    <text x="272" y="378">tweak library</text>
+    <circle cx="440" cy="372" r="3" fill="#b3adff"/>
+    <text x="454" y="378">self-updating</text>
+    <circle cx="628" cy="372" r="3" fill="#b3adff"/>
+    <text x="642" y="378">iOS 16+</text>
+  </g>
+
+  <!-- subtle phone glyph, echoing the app -->
+  <g transform="translate(1000 66) rotate(6)" opacity="0.9">
+    <rect x="0" y="0" width="196" height="288" rx="34" fill="#0e0e14" stroke="#ffffff" stroke-opacity="0.10"/>
+    <rect x="10" y="10" width="176" height="268" rx="26" fill="#101018"/>
+    <rect x="74" y="20" width="48" height="12" rx="6" fill="#000"/>
+    <!-- app card -->
+    <rect x="24" y="52" width="148" height="60" rx="14" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.10"/>
+    <rect x="34" y="66" width="32" height="32" rx="9" fill="url(#chip)"/>
+    <rect x="76" y="72" width="52" height="7" rx="3.5" fill="#ffffff" fill-opacity="0.85"/>
+    <rect x="76" y="86" width="34" height="6" rx="3" fill="#ffffff" fill-opacity="0.35"/>
+    <rect x="138" y="74" width="26" height="18" rx="6" fill="#b3adff"/>
+    <!-- toggles -->
+    <rect x="30" y="132" width="80" height="7" rx="3.5" fill="#ffffff" fill-opacity="0.55"/>
+    <rect x="140" y="128" width="26" height="15" rx="7.5" fill="#b3adff"/><circle cx="158.5" cy="135.5" r="5.5" fill="#fff"/>
+    <rect x="30" y="160" width="64" height="7" rx="3.5" fill="#ffffff" fill-opacity="0.55"/>
+    <rect x="140" y="156" width="26" height="15" rx="7.5" fill="#b3adff"/><circle cx="158.5" cy="163.5" r="5.5" fill="#fff"/>
+    <rect x="30" y="188" width="72" height="7" rx="3.5" fill="#ffffff" fill-opacity="0.55"/>
+    <rect x="140" y="184" width="26" height="15" rx="7.5" fill="#ffffff" fill-opacity="0.12"/><circle cx="147.5" cy="191.5" r="5.5" fill="#fff"/>
+    <!-- install bar -->
+    <rect x="24" y="228" width="148" height="34" rx="12" fill="#f2f2f6"/>
+    <rect x="72" y="241" width="52" height="8" rx="4" fill="#08080a"/>
+  </g>
+</svg>
