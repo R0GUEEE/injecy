@@ -1,0 +1,118 @@
+name: injecy
+options:
+  bundleIdPrefix: lol.injecy
+  createIntermediateGroups: true
+  deploymentTarget:
+    iOS: "16.0"
+
+settings:
+  base:
+    MARKETING_VERSION: "0.1.10"
+    CURRENT_PROJECT_VERSION: "11"
+    SWIFT_VERSION: "5.0"
+    # Automatic signing for on-device runs. CLI builds pass CODE_SIGNING_ALLOWED=NO to skip.
+    CODE_SIGN_STYLE: Automatic
+    DEVELOPMENT_TEAM: UJMQ79ZP3P
+    CODE_SIGN_IDENTITY: "Apple Development"
+
+packages:
+  NimbleKit:
+    path: Packages/NimbleKit
+  AltSourceKit:
+    path: Packages/AltSourceKit
+  Zsign:
+    path: Packages/Zsign
+  IDeviceKit:
+    path: Packages/IDeviceKitten
+  Nuke:
+    url: https://github.com/kean/Nuke
+    from: "12.8.0"
+  Vapor:
+    url: https://github.com/vapor/vapor
+    from: "4.106.0"
+  Zip:
+    url: https://github.com/marmelroy/Zip
+    from: "2.1.0"
+  SWCompression:
+    url: https://github.com/tsolomko/SWCompression
+    exactVersion: "4.8.6"
+  BitByteData:
+    url: https://github.com/tsolomko/BitByteData
+    exactVersion: "2.0.4"
+  AltSign:
+    path: Packages/AltSign
+
+targets:
+  injecy:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: injecy
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: lol.injecy.app.w3lt
+        PRODUCT_NAME: injecy
+        GENERATE_INFOPLIST_FILE: "YES"
+        SUPPORTS_MACCATALYST: "YES"
+        DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER: "NO"
+        TARGETED_DEVICE_FAMILY: "1,2"
+        ENABLE_PREVIEWS: "YES"
+        INFOPLIST_KEY_CFBundleDisplayName: injecy
+        SWIFT_OBJC_BRIDGING_HEADER: injecy/Supporting/injecy-Bridging-Header.h
+    dependencies:
+      - package: NimbleKit
+        product: NimbleViews
+      - package: NimbleKit
+        product: NimbleExtensions
+      - package: NimbleKit
+        product: NimbleJSON
+      - package: AltSourceKit
+        product: AltSourceKit
+      - package: Zsign
+        product: zsign
+      - package: Zsign
+        product: ZsignSwift
+      - package: IDeviceKit
+        product: IDevice
+      - package: IDeviceKit
+        product: IDeviceSwift
+      - package: Nuke
+        product: Nuke
+      - package: Nuke
+        product: NukeUI
+      - package: Vapor
+        product: Vapor
+      - package: Zip
+        product: Zip
+      - package: SWCompression
+        product: SWCompression
+      - package: AltSign
+        product: AltSign
+        embed: true
+        codeSign: true
+      # Live Activity widget is NOT embedded in the public build — an app extension needs its
+      # own provisioning for lol.injecy.app.w3lt.widgets, which most users' certs (no wildcard)
+      # can't provide → install fails with "integrity could not be verified". The target is kept
+      # below; to ship WITH the widget (wildcard cert only), re-add the dependency above.
+
+  injecyWidgets:
+    type: app-extension
+    platform: iOS
+    deploymentTarget: "16.2"
+    sources:
+      - path: injecyWidgets
+      - path: injecy/Backend/LiveActivity/InjecyActivityAttributes.swift
+    info:
+      path: injecyWidgets/Info.plist
+      properties:
+        CFBundleDisplayName: injecy
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: lol.injecy.app.w3lt.widgets
+        PRODUCT_NAME: injecyWidgets
+        TARGETED_DEVICE_FAMILY: "1,2"
+        SKIP_INSTALL: "NO"
+        SWIFT_VERSION: "5.0"

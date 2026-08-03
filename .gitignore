@@ -1,0 +1,31 @@
+# ── macOS ──
+.DS_Store
+
+# ── Xcode / build output ──
+DerivedData/
+build/
+_build/
+.build-ipa/
+*.xcuserstate
+xcuserdata/
+*.xcuserdatad/
+
+# xcodegen generates the project from project.yml — run `xcodegen generate`.
+injecy.xcodeproj/
+
+# ── Local scratch / backups ──
+_backups/
+
+# ── Build artifacts that live under Packages/ ──
+*.ipa
+Packages/*.jpg
+Packages/*.png
+
+# ── Build-time secrets (copy Secrets.swift.example -> Secrets.swift) ──
+injecy/Backend/Observable/Secrets.swift
+
+# ── On-device HTTPS server pack (backloop.dev). See deps/README.md. ──
+deps/server.pem
+deps/server.crt
+deps/cert.json
+deps/commonName.txt
