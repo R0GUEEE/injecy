@@ -1,0 +1,29 @@
+name: Build IPA
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['injecy/**','injecyWidgets/**','Packages/**','project.yml','Makefile','scripts/**','.github/workflows/build-ipa.yml']
+jobs:
+  build-ipa:
+    runs-on: macos-15
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select Xcode (prefer 26.x)
+        run: |
+          X=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | head -1)
+          [ -n "$X" ] && sudo xcode-select -s "$X"
+          xcodebuild -version
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Create Secrets.swift (placeholder)
+        run: cp injecy/Backend/Observable/Secrets.swift.example injecy/Backend/Observable/Secrets.swift
+      - name: Build unsigned IPA
+        run: make ipa
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: injecy-ipa
+          path: packages/injecy.ipa
+          if-no-files-found: error
