@@ -21,7 +21,7 @@ private struct StorageCategory: Identifiable {
 	var bytes: Int64
 	/// Destructive (deletes user data, not just cache) — needs confirmation.
 	let destructive: Bool
-	let clear: () -> Void
+	let clear: @MainActor () -> Void
 }
 
 // MARK: - View
@@ -331,6 +331,9 @@ struct StorageUsageView: View {
 
 	private func _compute() async {
 		_loading = true
+		// Read main-actor state before detaching — the Task.detached closure below is nonisolated.
+		let tweakCacheDirectory = TweakLibrary.shared.cacheDirectory
+		let catalogCacheURL = TweaksManager.shared.catalogCacheURL
 		let cats = await Task.detached(priority: .utility) { () -> [StorageCategory] in
 			var imagesBytes = Int64(URLCache.shared.currentDiskUsage)
 			if let nuke = ImagePipeline.shared.configuration.dataCache as? DataCache {
@@ -341,9 +344,9 @@ struct StorageUsageView: View {
 				StorageCategory(id: "images", name: .localized("Images"), icon: "photo.fill", color: .blue,
 				                bytes: imagesBytes, destructive: false) { ResetView.clearNetworkCache() },
 				StorageCategory(id: "tweaks", name: .localized("Tweak cache"), icon: "puzzlepiece.extension.fill", color: .orange,
-				                bytes: Self.directorySize(TweakLibrary.shared.cacheDirectory), destructive: false) { TweakLibrary.shared.clearCache() },
+				                bytes: Self.directorySize(tweakCacheDirectory), destructive: false) { TweakLibrary.shared.clearCache() },
 				StorageCategory(id: "catalog", name: .localized("Catalog"), icon: "books.vertical.fill", color: .purple,
-				                bytes: Self.fileSize(TweaksManager.shared.catalogCacheURL), destructive: false) { TweaksManager.shared.clearCatalogCache() },
+				                bytes: Self.fileSize(catalogCacheURL), destructive: false) { TweaksManager.shared.clearCatalogCache() },
 				StorageCategory(id: "temp", name: .localized("Temporary Files"), icon: "clock.fill", color: .green,
 				                bytes: Self.directorySize(fm.temporaryDirectory), destructive: false) { ResetView.clearWorkCache() },
 				StorageCategory(id: "signed", name: .localized("Signed Apps"), icon: "checkmark.seal.fill", color: .pink,
@@ -370,7 +373,7 @@ struct StorageUsageView: View {
 
 	// MARK: Sizing
 
-	static func directorySize(_ url: URL) -> Int64 {
+	nonisolated static func directorySize(_ url: URL) -> Int64 {
 		guard let en = FileManager.default.enumerator(
 			at: url, includingPropertiesForKeys: [.totalFileAllocatedSizeKey, .fileSizeKey]
 		) else { return 0 }
@@ -382,11 +385,11 @@ struct StorageUsageView: View {
 		return total
 	}
 
-	static func fileSize(_ url: URL) -> Int64 {
+	nonisolated static func fileSize(_ url: URL) -> Int64 {
 		Int64((try? url.resourceValues(forKeys: [.fileSizeKey]))?.fileSize ?? 0)
 	}
 
-	static func clearDirectory(_ url: URL) {
+	nonisolated static func clearDirectory(_ url: URL) {
 		guard let files = try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil) else { return }
 		for f in files { try? FileManager.default.removeItem(at: f) }
 	}
