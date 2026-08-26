@@ -53,12 +53,15 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: lol.injecy.app.w3lt
         PRODUCT_NAME: injecy
-        GENERATE_INFOPLIST_FILE: "YES"
+        # Info.plist is managed explicitly at injecy/Resources/Info.plist
+        # (auto-detected by XcodeGen as INFOPLIST_FILE). Generation is off so
+        # document-sharing keys (UIFileSharingEnabled / LSSupportsOpeningDocumentsInPlace)
+        # are guaranteed to reach the built app.
+        GENERATE_INFOPLIST_FILE: "NO"
         SUPPORTS_MACCATALYST: "YES"
         DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER: "NO"
         TARGETED_DEVICE_FAMILY: "1,2"
         ENABLE_PREVIEWS: "YES"
-        INFOPLIST_KEY_CFBundleDisplayName: injecy
         SWIFT_OBJC_BRIDGING_HEADER: injecy/Supporting/injecy-Bridging-Header.h
     dependencies:
       - package: NimbleKit
